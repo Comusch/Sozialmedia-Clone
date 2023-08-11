@@ -23,6 +23,14 @@
                     <img src="../static/Profil_images/{{ post.users.img_profile }}" width="30" height="30" class="d-inline-block align-top" alt="">{{ post.users.firstName }}
         </div>
             <div class="post-layour">
+            <br>
+                {% if post.post_image !="default.png" %}
+                <br>
+                    <div align="center" class="image-container">
+                    <img class="responsive-image" src="../static/Post_images/{{ post.post_image }}" class="d-inline-block align-top" >
+                    </div>
+                <br>
+                 {% endif %}
                 <div class="post-content" align="center">
                 {{ post.text }}
                 <br>

@@ -7,7 +7,19 @@
     width: 100%;
     margin: 0 auto;
     padding: 0;
+    border-radius: 10px;
     background-color: #83008d;
     color: #ffffff;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+.image-container {
+            width: 100%; /* Containerbreite auf 100% des Elternelements setzen */
+            max-width: 500px; /* Maximale Breite des Containers */
+            margin: 0 auto; /* Zentrieren des Containers */
+        }
+
+.responsive-image {
+    width: 80%; /* Bildbreite auf 100% des Containers setzen */
+    height: auto; /* Höhe automatisch anpassen, um das Bildverhältnis beizubehalten */
+    object-fit: contain; /* Bild skalieren und beibehalten des Bildverhältnisses */
 }

@@ -3,6 +3,7 @@ from models import User
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
+import os
 
 auth = Blueprint('auth', __name__)
 
@@ -68,10 +69,15 @@ def signup():
 @login_required
 def addProfile():
     if request.method == 'POST':
-        if "image_change" in request.files:
+        print(request.form)
+        if request.form.get('image_change') != None:
             print("image_change")
             image = request.files["image_change"]
-            image.save("../static/Profil_images/"+str(current_user.id)+".png")
+            print("lol")
+            image_filename = f"{current_user.id}_profil.png"
+            image_path = os.path.join("static", "Profil_images", image_filename)
+            print(image_path)
+            image.save(image_path)
             current_user.img_profile = str(current_user.id)+".png"
             print(current_user.img_profile)
             flash("Image saved!", category='success')
