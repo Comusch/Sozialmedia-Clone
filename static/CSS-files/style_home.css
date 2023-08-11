@@ -1,0 +1,14 @@
+
+.post-layour{
+    align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    background-color: #83008d;
+    color: #ffffff;
+    border-radius: 5%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}

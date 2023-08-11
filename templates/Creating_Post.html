@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}
+    Create Post
+{% endblock %}
+{% block navbar %}
+    <div align="right">
+    <a class="nav-item nav-link" href="#">
+        <img src="../static/Profil_images/{{ user.img_profile }}" width="30" height="30" class="d-inline-block align-top" alt="">
+        {{ user.firstName }}
+    </a>
+    </div>
+{% endblock %}
+{% block content %}
+<h2 align="center">Creating Post</h2>
+    <br>
+<form method="POST">
+    <textarea name="post_text" id="post_text" class="form-control" placeholder="Enter here your post"></textarea>
+    <br>
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Publish Post</button>
+    </div>
+</form>
+{% endblock %}

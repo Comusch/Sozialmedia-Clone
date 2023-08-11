@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block  title%}Change Profil{% endblock %}
+{% block  content%}
+<h1 align="center">Change Profil</h1>
+    <div id="Changing Profil">
+    <img src="../static/Profil_images/{{user.img_profile}}" alt="image" width="200" height="200" style="border-radius: 50%; margin-left: 40%; margin-top: 5%">
+    <h5 align="center">{{ user.firstName }}</h5>
+        <br>
+    <p align="center">{{ user.profile_description }}</p>
+        <br>
+    <h4 align="center">Change your profil </h4>
+        <br>
+<form method="POST">
+    <textarea name="profile_description" id="profile_description" class="form-control" placeholder="Enter profile description"></textarea>
+    <br>
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Change</button>
+    </div>
+</form>
+    </div>
+{% endblock %}
