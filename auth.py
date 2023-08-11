@@ -6,6 +6,8 @@ from flask_login import login_user, login_required, logout_user, current_user
 
 auth = Blueprint('auth', __name__)
 
+#TODO: Finish loading the profile image
+
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     #data gets the data from the form, form is coming from the login.html post method
@@ -66,7 +68,15 @@ def signup():
 @login_required
 def addProfile():
     if request.method == 'POST':
+        if "image_change" in request.files:
+            print("image_change")
+            image = request.files["image_change"]
+            image.save("../static/Profil_images/"+str(current_user.id)+".png")
+            current_user.img_profile = str(current_user.id)+".png"
+            print(current_user.img_profile)
+            flash("Image saved!", category='success')
         profile_description = request.form.get('profile_description')
         current_user.profile_description = profile_description
         db.session.commit()
+        flash("Profile saved!", category='success')
     return render_template("addProfile.html", user=current_user)

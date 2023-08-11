@@ -1,13 +1,14 @@
 {% extends "base.html" %} {% block  title%}Home{% endblock %}
 {% block styles %}
     <link rel="stylesheet" href="../static/CSS-files/style_home.css">
+
 {% endblock %}
 {% block navbar %}
     <a class="nav-item nav-link" href="/Create_Post">
         <img src="../static/Icons/Post.png" width="25" height="25" class="d-inline-block align-top" alt="">
     </a>
     <div align="right">
-    <a class="nav-item nav-link" href="#">
+    <a class="nav-item nav-link" href="/addProfile">
         <img src="../static/Profil_images/{{ user.img_profile }}" width="30" height="30" class="d-inline-block align-top" alt="">
         {{ user.firstName }}
     </a>
@@ -20,7 +21,7 @@
     {% for post in posts %}
         <div class="user-post" align="left">
                     <img src="../static/Profil_images/{{ post.users.img_profile }}" width="30" height="30" class="d-inline-block align-top" alt="">{{ post.users.firstName }}
-                </div>
+        </div>
             <div class="post-layour">
                 <div class="post-content" align="center">
                 {{ post.text }}

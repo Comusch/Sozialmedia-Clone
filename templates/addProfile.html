@@ -13,6 +13,11 @@
 <form method="POST">
     <textarea name="profile_description" id="profile_description" class="form-control" placeholder="Enter profile description"></textarea>
     <br>
+    <input type="file" id="image_change" accept="image/*" name="image_change" >
+    <div id="imageContainer">
+        <img id="loadedImage" src="#" alt="Loaded Image">
+    </div>
+    <br>
     <div align="center">
         <button type="submit" class="btn btn-primary">Change</button>
     </div>
