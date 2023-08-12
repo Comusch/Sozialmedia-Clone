@@ -8,7 +8,21 @@ class Post(db.Model):
     post_image = db.Column(db.String(150), default = "default.png")
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    likes = db.Column(db.Integer, default = 0)
     users = db.relationship('User')
+    comments = db.relationship('Comment')
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    text = db.Column(db.String(150))
+    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    likes = db.Column(db.Integer, default = 0)
+    dislikes = db.Column(db.Integer, default = 0)
+    posts = db.relationship('Post')
+    users = db.relationship('User')
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
