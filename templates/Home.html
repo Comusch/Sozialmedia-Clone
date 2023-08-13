@@ -12,7 +12,6 @@
         <img src="../static/Profil_images/{{ user.img_profile }}" width="30" height="30" class="d-inline-block align-top" alt="">
         {{ user.firstName }}
     </a>
-
     </div>
 {% endblock %}
 {% block content %}
@@ -32,29 +31,30 @@
                     </div>
                 <br>
                  {% endif %}
-                <div class="post-content" align="center">
-                {{ post.text }}
-                <br>
-                {{ post.date }}
-                </div>
+                    <div class="post-content" align="center">
+                        {{ post.text }}
+                        <br>
+                        {{ post.date }}
+                    </div>
                    <br>
                    <div align="center">
                      {% set liked_post_ids = [] %}
                      {% for like in user.likes_by_users %}
                          {% set _ = liked_post_ids.append(like.post_id) %}
-                    {% endfor %}
-                    {% if post.id in liked_post_ids %}
-                       <img src="../static/Icons/liked.png" width="25" height="25" class="d-inline-block align-top" alt="">
+                     {% endfor %}
+                       {% if post.id in liked_post_ids %}
+                            <img src="../static/Icons/liked.png" width="25" height="25" class="d-inline-block align-top" alt="">
                        {% else %}
-                        <button type="submit" name="like" value="{{ post.id }}" class="likesbutton">
+                            <button type="submit" name="like" value="{{ post.id }}" class="likesbutton">
                             <img src="../static/Icons/like.png" width="25" height="25" class="d-inline-block align-top" alt="">
-                        </button>
+                             </button>
                        {% endif %}
-                        <p1>{{ post.likes }}</p1>
-                        <button type="button" data-post-id="{{ post.id }}" class="load-comments-button">
+                       <p1>{{ post.likes }}</p1>
+                       <button type="button" data-post-id="{{ post.id }}" class="load-comments-button">
                             <img src="../static/Icons/Comment.png" width="30" height="100%" class="d-inline-block align-top" alt="">
-                        </button>
-                        <div class="comment-section" style="display: none;" id="comment-section-{{ post.id }}">
+                       </button>
+                       <p1>{{ post.comments|length }}</p1>
+                       <div class="comment-section" style="display: none;" id="comment-section-{{ post.id }}">
                             <p>Comments</p>
                             <div class="comments-container">
                                 {% for comment in post.comments %}
@@ -70,15 +70,16 @@
                                 {% endfor %}
                             </div>
 
-                            <div class="comment-input-container" >
+                            <div class="comment-input-container flex-container" >
                                 <textarea class="form-control" name="comment_text" placeholder="Write a comment..." style="width: 50%;"></textarea>
                                 <button class="send-comment-button" data-post-id="{{ post.id }}" value="{{ post.id }}" name="send_comment">
                                 <img src="../static/Icons/send.png" width="25" height="25" class="d-inline-block align-top" alt="">
                                 </button>
 
                             </div>
+                            <br>
 
-                        </div>
+                       </div>
 
                    </div>
 
