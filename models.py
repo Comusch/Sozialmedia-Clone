@@ -12,6 +12,7 @@ class Post(db.Model):
     users = db.relationship('User')
     comments = db.relationship('Comment')
     liked_by_users = db.relationship('User_likes_to_post', back_populates='post')
+    hashtags = db.relationship('Post_hashtags', back_populates='post')
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -42,3 +43,17 @@ class User_likes_to_post(db.Model):
     # Define the relationships with User and Post models
     user = db.relationship('User', back_populates='likes_by_users')
     post = db.relationship('Post', back_populates='liked_by_users')
+
+class Post_hashtags(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    hashtag_id = db.Column(db.Integer, db.ForeignKey('hashtags.id'))
+
+    # Define the relationships with Hashtags and Post models
+    post = db.relationship('Post')
+    hashtags = db.relationship('Hashtags')
+
+class Hashtags(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    hashtag = db.Column(db.String(150), unique=True)
+

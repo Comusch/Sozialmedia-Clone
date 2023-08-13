@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 from app import db
-from models import Post, User_likes_to_post, Comment, User
+from models import Post, User_likes_to_post, Comment, User, Hashtags, Post_hashtags
 import datetime
 from sqlalchemy.sql import func
 import json
@@ -38,7 +38,14 @@ def home():
                 db.session.add(new_comment)
                 db.session.commit()
                 flash('Comment is saved!', category="success")
-    return render_template("home.html", user=current_user, posts= Post.query.order_by(Post.date.desc()).all())
+    return render_template("home.html", user=current_user, posts= Post.query.order_by(Post.date.desc()).all(), hashtags=Hashtags.query.all())
+
+def get_hashtags(text):
+    hashtags = []
+    for word in text.split(" "):
+        if word.startswith("#"):
+            hashtags.append(word)
+    return hashtags
 
 @views.route('/Create_Post', methods=['GET', 'POST'])
 @login_required
@@ -46,6 +53,7 @@ def createPost():
     if request.method == "POST":
         print(request.form)
         data = request.form.get("post_text")
+        hashtags_text = request.form.get("hashtags")
         if len(data) < 1:
             flash('Post is too short!', category="error")
         else:
@@ -61,11 +69,28 @@ def createPost():
                     image_path = os.path.join("static", "Post_images", image_filename)
                     image.save(image_path)
                     new_Post.post_image = image_filename
-
             db.session.commit()
+
+            if hashtags_text:
+                hashtags = get_hashtags(hashtags_text)
+                for hashtag in hashtags:
+                    hashtag_id = Hashtags.query.filter_by(hashtag=hashtag).first()
+                    if hashtag_id:
+                        newPost_hashtag = Post_hashtags(post_id=new_Post.id, hashtag_id=hashtag_id.id)
+                        db.session.add(newPost_hashtag)
+                    else:
+                        newHashtag = Hashtags(hashtag=hashtag)
+                        db.session.add(newHashtag)
+                        db.session.commit()
+                        newPost_hashtag = Post_hashtags(post_id=new_Post.id, hashtag_id=newHashtag.id)
+                        db.session.add(newPost_hashtag)
+                db.session.commit()
+
             flash('Post is saved!', category="success")
 
     return render_template("Creating_Post.html", user=current_user)
+
+
 
 @views.route('/Profil/<int:user_id>', methods=['GET', 'POST'])
 @login_required
