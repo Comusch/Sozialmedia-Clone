@@ -110,3 +110,8 @@ def profil(user_id):
             db.session.commit()
             flash('Comment is saved!', category="success")
     return render_template("Profil.html", user=current_user, other_user=User.query.filter_by(id=user_id).first())
+
+@views.route('/Hashtag/<int:hashtag_id>', methods=['GET', 'POST'])
+@login_required
+def profil(hashtag_id):
+    return render_template("Hashtags.html", user=current_user, hashtag=Hashtags.query.filter_by(id=hashtag_id).first())
