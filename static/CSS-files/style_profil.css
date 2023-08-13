@@ -1,0 +1,69 @@
+
+.post-layour{
+    align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    border-radius: 10px;
+    background-color: #83008d;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+.image-container {
+            width: 100%; /* Containerbreite auf 100% des Elternelements setzen */
+            max-width: 500px; /* Maximale Breite des Containers */
+            margin: 0 auto; /* Zentrieren des Containers */
+        }
+
+.responsive-image {
+    width: 50%; /* Bildbreite auf 100% des Containers setzen */
+    height: auto; /* Höhe automatisch anpassen, um das Bildverhältnis beizubehalten */
+    object-fit: contain; /* Bild skalieren und beibehalten des Bildverhältnisses */
+}
+
+.likesbutton{
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+}
+
+.load-comments-button{
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+}
+.send-comment-button{
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+}
+.comment-section{
+    background-color: #5d0067;
+    border-radius: 10px;
+}
+.comment{
+    background-color: #3900e7;
+    border-radius: 10px;
+    width: 60%;
+    color: #ffffff;
+}
+.flex-container {
+    display: flex;
+    justify-content: center; /* Horizontally center the items */
+    align-items: center; /* Vertically center the items */
+}
+
+.profile_view_layout{
+    background-color: #3900e7;
+    border-radius: 10px;
+    color: #ffffff;
+}

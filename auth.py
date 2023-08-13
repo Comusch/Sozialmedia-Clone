@@ -70,7 +70,7 @@ def signup():
 def addProfile():
     if request.method == 'POST':
         print(request.form)
-        if request.form.get('image') != None:
+        if "image" in request.files:
             print("image")
             image = request.files["image"]
             print("lol")
@@ -78,7 +78,7 @@ def addProfile():
             image_path = os.path.join("static", "Profil_images", image_filename)
             print(image_path)
             image.save(image_path)
-            current_user.img_profile = str(current_user.id)+".png"
+            current_user.img_profile = image_filename
             print(current_user.img_profile)
             flash("Image saved!", category='success')
 

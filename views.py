@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 from app import db
-from models import Post, User_likes_to_post, Comment
+from models import Post, User_likes_to_post, Comment, User
 import datetime
 from sqlalchemy.sql import func
 import json
@@ -25,7 +25,11 @@ def home():
                 db.session.commit()
                 flash('Post is liked!', category="success")
         else:
-            comment_text = request.form.get("comment_text")
+            comment_texts = request.form.getlist("comment_text")
+            comment_text = ""
+            for comment_txt in comment_texts:
+                if comment_txt != "":
+                    comment_text = comment_txt
             id_post = request.form.get("send_comment")
             if len(comment_text) < 1:
                 flash('Comment is too short!', category="error")
@@ -62,3 +66,22 @@ def createPost():
             flash('Post is saved!', category="success")
 
     return render_template("Creating_Post.html", user=current_user)
+
+@views.route('/Profil/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def profil(user_id):
+    if request.method == "POST":
+        comment_texts = request.form.getlist("comment_text")
+        comment_text = ""
+        for comment_txt in comment_texts:
+            if comment_txt != "":
+                comment_text = comment_txt
+        id_post = request.form.get("send_comment")
+        if len(comment_text) < 1:
+            flash('Comment is too short!', category="error")
+        else:
+            new_comment = Comment(text=comment_text, user_id=current_user.id, post_id=id_post)
+            db.session.add(new_comment)
+            db.session.commit()
+            flash('Comment is saved!', category="success")
+    return render_template("Profil.html", user=current_user, other_user=User.query.filter_by(id=user_id).first())
