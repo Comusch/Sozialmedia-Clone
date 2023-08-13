@@ -18,6 +18,7 @@
 {% block content %}
 <h1>Posts</h1>
     <br>
+    <form method="POST">
     {% for post in posts %}
         <div class="user-post" align="left">
                     <img src="../static/Profil_images/{{ post.users.img_profile }}" width="30" height="30" class="d-inline-block align-top" alt="">{{ post.users.firstName }}
@@ -36,7 +37,54 @@
                 <br>
                 {{ post.date }}
                 </div>
+                   <br>
+                   <div align="center">
+                     {% set liked_post_ids = [] %}
+                     {% for like in user.likes_by_users %}
+                         {% set _ = liked_post_ids.append(like.post_id) %}
+                    {% endfor %}
+                    {% if post.id in liked_post_ids %}
+                       <img src="../static/Icons/liked.png" width="25" height="25" class="d-inline-block align-top" alt="">
+                       {% else %}
+                        <button type="submit" name="like" value="{{ post.id }}" class="likesbutton">
+                            <img src="../static/Icons/like.png" width="25" height="25" class="d-inline-block align-top" alt="">
+                        </button>
+                       {% endif %}
+                        <p1>{{ post.likes }}</p1>
+                        <button type="button" data-post-id="{{ post.id }}" class="load-comments-button">
+                            <img src="../static/Icons/Comment.png" width="30" height="100%" class="d-inline-block align-top" alt="">
+                        </button>
+                        <div class="comment-section" style="display: none;" id="comment-section-{{ post.id }}">
+                            <p>Comments</p>
+                            <div class="comments-container">
+                                {% for comment in post.comments %}
+                                    <div class="comment">
+                                        <div class="comment-user">
+                                            <img src="../static/Profil_images/{{ comment.users.img_profile }}" width="30" height="30" class="d-inline-block align-top" alt="">{{ comment.users.firstName }}
+                                        </div>
+                                        <div class="comment-text">
+                                            {{ comment.text }}
+                                        </div>
+                                    </div>
+                                    <br>
+                                {% endfor %}
+                            </div>
+
+                            <div class="comment-input-container" >
+                                <textarea class="form-control" name="comment_text" placeholder="Write a comment..." style="width: 50%;"></textarea>
+                                <button class="send-comment-button" data-post-id="{{ post.id }}" value="{{ post.id }}" name="send_comment">
+                                <img src="../static/Icons/send.png" width="25" height="25" class="d-inline-block align-top" alt="">
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                   </div>
+
             </div>
         <br>
     {% endfor %}
+       </form>
+    <script type="text/javascript" src="{{ url_for('static', filename='home_script.js') }}"></script>
 {% endblock %}

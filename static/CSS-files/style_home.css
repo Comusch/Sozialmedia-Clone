@@ -23,3 +23,36 @@
     height: auto; /* Höhe automatisch anpassen, um das Bildverhältnis beizubehalten */
     object-fit: contain; /* Bild skalieren und beibehalten des Bildverhältnisses */
 }
+
+.likesbutton{
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+}
+
+.load-comments-button{
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+}
+.send-comment-button{
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+}
+.comment-section{
+    background-color: #5d0067;
+    border-radius: 10px;
+}
+.comment{
+    background-color: #3900e7;
+    border-radius: 10px;
+    width: 50%;
+    color: #ffffff;
+}

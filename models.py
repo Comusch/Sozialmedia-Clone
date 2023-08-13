@@ -11,6 +11,7 @@ class Post(db.Model):
     likes = db.Column(db.Integer, default = 0)
     users = db.relationship('User')
     comments = db.relationship('Comment')
+    liked_by_users = db.relationship('User_likes_to_post', back_populates='post')
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -19,10 +20,8 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     likes = db.Column(db.Integer, default = 0)
-    dislikes = db.Column(db.Integer, default = 0)
     posts = db.relationship('Post')
     users = db.relationship('User')
-
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
@@ -33,3 +32,13 @@ class User(db.Model, UserMixin):
     profile_description = db.Column(db.String(150), default="I am a user of this website!")
     img_profile = db.Column(db.String(150), default = "default.png")
     posts = db.relationship('Post')
+    likes_by_users = db.relationship('User_likes_to_post', back_populates='user')
+
+class User_likes_to_post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+
+    # Define the relationships with User and Post models
+    user = db.relationship('User', back_populates='likes_by_users')
+    post = db.relationship('Post', back_populates='liked_by_users')

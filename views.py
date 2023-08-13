@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 from app import db
-from models import Post
+from models import Post, User_likes_to_post, Comment
 import datetime
 from sqlalchemy.sql import func
 import json
@@ -13,6 +13,27 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
+    if request.method == "POST":
+        print(request.form)
+        id_like = request.form.get("like")
+        if id_like:
+            post = Post.query.filter_by(id=id_like).first()
+            if post:
+                post.likes += 1
+                newUser_like_post = User_likes_to_post(user_id=current_user.id, post_id=id_like)
+                db.session.add(newUser_like_post)
+                db.session.commit()
+                flash('Post is liked!', category="success")
+        else:
+            comment_text = request.form.get("comment_text")
+            id_post = request.form.get("send_comment")
+            if len(comment_text) < 1:
+                flash('Comment is too short!', category="error")
+            else:
+                new_comment = Comment(text=comment_text, user_id=current_user.id, post_id=id_post)
+                db.session.add(new_comment)
+                db.session.commit()
+                flash('Comment is saved!', category="success")
     return render_template("home.html", user=current_user, posts= Post.query.order_by(Post.date.desc()).all())
 
 @views.route('/Create_Post', methods=['GET', 'POST'])
