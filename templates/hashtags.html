@@ -1,7 +1,20 @@
 {% extends "base.html" %}
 {% block title %}
-    <title>Hashtags</title>
+    Hashtags - {{ hashtag.hashtag }}
 {% endblock %}
 {% block content %}
-    <h1>Hashtags</h1>
+    <h1>Posts under {{ hashtag.hashtag }}</h1>
+    <div>
+     <form method="POST">
+    {% for post in hashtag_posts.posts %}
+        <div class="post">
+            <p>{{ post.text }}</p>
+            <p>{{ post.date }}</p>
+            <p>{{ post.hashtags }}</p>
+        </div>
+        <br>
+       {% endfor %}
+        <br>
+       </form>
+    </div>
 {% endblock %}

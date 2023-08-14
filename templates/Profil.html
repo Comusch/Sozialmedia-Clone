@@ -31,6 +31,23 @@
                  {% endif %}
                     <div class="post-content" align="center">
                         {{ post.text }}
+                        {% if post.hashtags|length > 0 %}
+                            <div class="hashtags">
+                                {% set hashtag_inpost = [] %}
+                                {% for hashtag in hashtags %}
+                                    {% for post_hashtag in post.hashtags %}
+                                        {% if hashtag.id == post_hashtag.hashtag_id %}
+                                            {% set _ = hashtag_inpost.append(hashtag) %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for hashtag in hashtag_inpost %}
+                                    <a href="/Hashtag/{{ hashtag.id }}" style="color: black; text-underline: none">
+                                        {{ hashtag.hashtag}}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                         <br>
                         {{ post.date }}
                     </div>
@@ -83,6 +100,8 @@
 
                    </div>
         </div>
+        <br>
+        <br>
     {% endfor %}
     <br>
     <br>
