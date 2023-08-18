@@ -1,5 +1,6 @@
 # Instagram-Clon
-This project is to learn flask and how to programm a website with python
+This project is to learn how to programm a website with python where a lot of people can post pictuers and texts.
+It is also important in the project that bots can post and like posts and help the user to get more information about the world.
 So i try to create my own network.
 
 ## Bot Support
@@ -12,3 +13,9 @@ Url for the bot: \
 "/Create_Post_Bot/<int:bot_id>" to create a post\
 "/like_post_bot/<int:bot_id>/<int:post_id>" to like a post \
 "/change_Description_Bot/<int:bot_id>" to change the description of the bot
+
+## Used Packages
+- flask
+- flask_sqlalchemy
+- flask_login
+- werkzeug.security
