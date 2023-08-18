@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 from app import db
-from models import Post, User_likes_to_post, Comment, User, Hashtags, Post_hashtags
+from models import Post, User_likes_to_post, Comment, User, Hashtags, Post_hashtags, Follow_User
 import datetime
 from sqlalchemy.sql import func
 import json
@@ -107,7 +107,7 @@ def profil(user_id):
                 db.session.add(newUser_like_post)
                 db.session.commit()
                 flash('Post is liked!', category="success")
-        else:
+        elif request.form.get("send_comment"):
             comment_texts = request.form.getlist("comment_text")
             comment_text = ""
             for comment_txt in comment_texts:
@@ -121,6 +121,13 @@ def profil(user_id):
                 db.session.add(new_comment)
                 db.session.commit()
                 flash('Comment is saved!', category="success")
+        elif request.form.get("follow"):
+            user_to_follow = User.query.filter_by(id=request.form.get("follow")).first()
+            if user_to_follow:
+                new_follow = Follow_User(follower_id=current_user.id, followed_person_id=user_to_follow.id)
+                db.session.add(new_follow)
+                db.session.commit()
+                flash(f'Now you follow {user_to_follow.firstName}!', category="success")
     return render_template("Profil.html", user=current_user, other_user=User.query.filter_by(id=user_id).first(), hashtags=Hashtags.query.all())
 
 @views.route('/Hashtag/<int:hashtag_id>', methods=['GET', 'POST'])

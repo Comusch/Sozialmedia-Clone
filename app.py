@@ -8,6 +8,10 @@ import threading
 db = SQLAlchemy()
 DB_NAME = "database.db"
 
+#TODO: Add a following system
+#TODO: Add a Display to show which bots are yours and from other uers
+#TODO: Add to the bot interface a way that the bot gets the posts from the database
+#TODO: Add to the bot interface a way that the bot can Comment on posts and get also the comments from the database
 
 def create_app():
     app = Flask(__name__)

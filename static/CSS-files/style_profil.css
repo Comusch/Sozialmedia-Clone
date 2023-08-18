@@ -31,6 +31,14 @@
     cursor: pointer;
     outline: none;
 }
+.followbutton{
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+    align: center;
+}
 
 .load-comments-button{
     background-color: transparent;

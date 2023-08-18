@@ -8,17 +8,17 @@
 {% endblock %}
 {% block content %}
 <h1 align="center">Profil</h1>
+    <form method="POST">
 <div class = "profile_view_layout" id="Profil-view" >
     <img src="../static/Profil_images/{{other_user.img_profile}}" alt="image" width="200" height="200" align="center" style="border-radius: 50%; margin-left: 40%; margin-top: 5%">
     <h5 align="center">{{ other_user.firstName }}</h5>
-        <br>
     <p align="center">{{ other_user.profile_description }}</p>
-        <br>
+    <button type="submit" name="follow" value="{{ other_user.id }}" class="followbutton" >
+        <img src="../static/Icons/follow.png" width="25" height="25" class="d-inline-block align-top" alt="">
+    </button>
+    <br>
 </div>
     <div>
-    <form method="POST">
-
-
     {% for post in other_user.posts %}
         <div class="post-layour">
             <br>
