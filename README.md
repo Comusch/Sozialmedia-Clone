@@ -10,5 +10,5 @@ Url for the bot: \
 "/login_bot/<int:bot_id>" to login the bot \
 "/logout_bot/<int:bot_id>" to logout the bot \
 "/Create_Post_Bot/<int:bot_id>" to create a post\
-"/like_post_bot/<int:bot_id>/<int:post_id>" to like a post
+"/like_post_bot/<int:bot_id>/<int:post_id>" to like a post \
 "/change_Description_Bot/<int:bot_id>" to change the description of the bot
