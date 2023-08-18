@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% block styles %}
+    <link rel="stylesheet" href="../static/CSS-files/style_hashtags.css">
+
+{% endblock %}
 {% block title %}
     Hashtags - {{ hashtag.hashtag }}
 {% endblock %}
@@ -6,15 +10,98 @@
     <h1>Posts under {{ hashtag.hashtag }}</h1>
     <div>
      <form method="POST">
-    {% for post in hashtag_posts.posts %}
-        <div class="post">
-            <p>{{ post.text }}</p>
-            <p>{{ post.date }}</p>
-            <p>{{ post.hashtags }}</p>
+    {% for post in hashtag_posts%}
+        <div class="user-post" align="left">
+            <a href="/Profil/{{ post.users.id }}" style="color: black; text-underline: none">
+                    <img src="../static/Profil_images/{{ post.users.img_profile }}" width="30" height="30" class="d-inline-block align-top" style="border-radius: 50%;">  {{ post.users.firstName }}
+                </a>
         </div>
+            <div class="post-layour">
+            <br>
+                {% if post.post_image !="default.png" %}
+                <br>
+                    <div align="center" class="image-container">
+                    <img class="responsive-image" src="../static/Post_images/{{ post.post_image }}" class="d-inline-block align-top" >
+                    </div>
+                <br>
+                 {% endif %}
+                    <div class="post-content" align="center">
+                        {{ post.text }}
+                        <br>
+                        {% if post.hashtags|length > 0 %}
+                            <div class="hashtags">
+                                {% set hashtag_inpost = [] %}
+                                {% for hashtag in hashtags %}
+                                    {% for post_hashtag in post.hashtags %}
+                                        {% if hashtag.id == post_hashtag.hashtag_id %}
+                                            {% set _ = hashtag_inpost.append(hashtag) %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for hashtag in hashtag_inpost %}
+                                    <a href="/Hashtag/{{ hashtag.id }}" style="color: black; text-underline: none">
+                                        {{ hashtag.hashtag}}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <br>
+                        {{ post.date }}
+                    </div>
+                   <br>
+                   <div align="center">
+                     {% set liked_post_ids = [] %}
+                     {% for like in user.likes_by_users %}
+                         {% set _ = liked_post_ids.append(like.post_id) %}
+                     {% endfor %}
+                       {% if post.id in liked_post_ids %}
+                            <img src="../static/Icons/liked.png" width="25" height="25" class="d-inline-block align-top" alt="">
+                       {% else %}
+                            <button type="submit" name="like" value="{{ post.id }}" class="likesbutton">
+                            <img src="../static/Icons/like.png" width="25" height="25" class="d-inline-block align-top" alt="">
+                             </button>
+                       {% endif %}
+                       <p1>{{ post.likes }}</p1>
+                       <button type="button" data-post-id="{{ post.id }}" class="load-comments-button">
+                            <img src="../static/Icons/Comment.png" width="30" height="100%" class="d-inline-block align-top" alt="">
+                       </button>
+                       <p1>{{ post.comments|length }}</p1>
+                       <div class="comment-section" style="display: none;" id="comment-section-{{ post.id }}">
+                            <p>Comments</p>
+                            <div class="comments-container">
+                                {% for comment in post.comments %}
+                                    <div class="comment">
+                                        <div class="comment-user">
+                                            <a href="/Profil/{{ comment.user_id }}" style="color: black; text-underline: none">
+                                            <img src="../static/Profil_images/{{ comment.users.img_profile }}" width="30" height="30" class="d-inline-block align-top" alt="" style="border-radius: 50%;">{{ comment.users.firstName }}
+                                            </a>
+                                        </div>
+                                        <div class="comment-text">
+                                            {{ comment.text }}
+                                        </div>
+                                    </div>
+                                    <br>
+                                {% endfor %}
+                            </div>
+
+                            <div class="comment-input-container flex-container" >
+                                <textarea class="form-control" name="comment_text" placeholder="Write a comment..." style="width: 50%;"></textarea>
+                                <button class="send-comment-button" data-post-id="{{ post.id }}" value="{{ post.id }}" name="send_comment">
+                                <img src="../static/Icons/send.png" width="25" height="25" class="d-inline-block align-top" alt="">
+                                </button>
+
+                            </div>
+                            <br>
+
+                       </div>
+
+                   </div>
+
+            </div>
         <br>
        {% endfor %}
         <br>
        </form>
     </div>
+     <script type="text/javascript" src="{{ url_for('static', filename='home_script.js') }}"></script>
 {% endblock %}

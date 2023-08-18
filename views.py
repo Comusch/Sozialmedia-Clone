@@ -96,22 +96,59 @@ def createPost():
 @login_required
 def profil(user_id):
     if request.method == "POST":
-        comment_texts = request.form.getlist("comment_text")
-        comment_text = ""
-        for comment_txt in comment_texts:
-            if comment_txt != "":
-                comment_text = comment_txt
-        id_post = request.form.get("send_comment")
-        if len(comment_text) < 1:
-            flash('Comment is too short!', category="error")
+        print(request.form)
+        id_like = request.form.get("like")
+        if id_like:
+            post = Post.query.filter_by(id=id_like).first()
+            if post:
+                post.likes += 1
+                newUser_like_post = User_likes_to_post(user_id=current_user.id, post_id=id_like)
+                db.session.add(newUser_like_post)
+                db.session.commit()
+                flash('Post is liked!', category="success")
         else:
-            new_comment = Comment(text=comment_text, user_id=current_user.id, post_id=id_post)
-            db.session.add(new_comment)
-            db.session.commit()
-            flash('Comment is saved!', category="success")
+            comment_texts = request.form.getlist("comment_text")
+            comment_text = ""
+            for comment_txt in comment_texts:
+                if comment_txt != "":
+                    comment_text = comment_txt
+            id_post = request.form.get("send_comment")
+            if len(comment_text) < 1:
+                flash('Comment is too short!', category="error")
+            else:
+                new_comment = Comment(text=comment_text, user_id=current_user.id, post_id=id_post)
+                db.session.add(new_comment)
+                db.session.commit()
+                flash('Comment is saved!', category="success")
     return render_template("Profil.html", user=current_user, other_user=User.query.filter_by(id=user_id).first(), hashtags=Hashtags.query.all())
 
 @views.route('/Hashtag/<int:hashtag_id>', methods=['GET', 'POST'])
 @login_required
 def hashtag_side(hashtag_id):
-    return render_template("Hashtags.html", user=current_user, hashtag=Hashtags.query.filter_by(id=hashtag_id).first(), hashtags=Hashtags.query.all(), hashtag_posts=Post.query.join(Post_hashtags).filter(Post_hashtags.hashtag_id == hashtag_id).all())
+    print(Post.query.join(Post_hashtags).filter(Post_hashtags.hashtag_id == hashtag_id).all())
+    if request.method == "POST":
+        print(request.form)
+        id_like = request.form.get("like")
+        if id_like:
+            post = Post.query.filter_by(id=id_like).first()
+            if post:
+                post.likes += 1
+                newUser_like_post = User_likes_to_post(user_id=current_user.id, post_id=id_like)
+                db.session.add(newUser_like_post)
+                db.session.commit()
+                flash('Post is liked!', category="success")
+        else:
+            comment_texts = request.form.getlist("comment_text")
+            comment_text = ""
+            for comment_txt in comment_texts:
+                if comment_txt != "":
+                    comment_text = comment_txt
+            id_post = request.form.get("send_comment")
+            if len(comment_text) < 1:
+                flash('Comment is too short!', category="error")
+            else:
+                new_comment = Comment(text=comment_text, user_id=current_user.id, post_id=id_post)
+                db.session.add(new_comment)
+                db.session.commit()
+                flash('Comment is saved!', category="success")
+    return render_template("Hashtags.html", user=current_user, hashtag=Hashtags.query.filter_by(id=hashtag_id).first(), hashtags=Hashtags.query.all(), hashtag_posts=Post.query.join(Post_hashtags).filter(Post_hashtags.hashtag_id == hashtag_id).order_by(Post.date.desc()).all())
