@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 from app import db
-from models import Post, User_likes_to_post, Comment, User, Hashtags, Post_hashtags, Follow_User
+from models import Post, User_likes_to_post, Comment, User, Hashtags, Post_hashtags, Follow_User, Bot_of_User
 import datetime
 from sqlalchemy.sql import func
 import json
@@ -123,12 +123,13 @@ def profil(user_id):
                 flash('Comment is saved!', category="success")
         elif request.form.get("follow"):
             user_to_follow = User.query.filter_by(id=request.form.get("follow")).first()
-            if user_to_follow:
+            if user_to_follow and user_to_follow.id != current_user.id and not Follow_User.query.filter_by(follower_id=current_user.id, followed_person_id=user_to_follow.id).first():
                 new_follow = Follow_User(follower_id=current_user.id, followed_person_id=user_to_follow.id)
                 db.session.add(new_follow)
                 db.session.commit()
                 flash(f'Now you follow {user_to_follow.firstName}!', category="success")
-    return render_template("Profil.html", user=current_user, other_user=User.query.filter_by(id=user_id).first(), hashtags=Hashtags.query.all())
+
+    return render_template("Profil.html", user=current_user, other_user=User.query.filter_by(id=user_id).first(), hashtags=Hashtags.query.all(), follower_of_other=Follow_User.query.filter_by(followed_person_id=user_id).all(), following_of_other=Follow_User.query.filter_by(follower_id=user_id).all(), bots=Bot_of_User.query.filter_by(user_id=user_id).all())
 
 @views.route('/Hashtag/<int:hashtag_id>', methods=['GET', 'POST'])
 @login_required

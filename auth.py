@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from models import User, Bot_of_User
+from models import User, Bot_of_User, Follow_User
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
@@ -97,5 +97,5 @@ def addProfile():
             db.session.commit()
             flash(f"Bot{bot_name} created!", category='success')
         flash("Profile saved!", category='success')
-    return render_template("addProfile.html", user=current_user)
+    return render_template("addProfile.html", user=current_user, follower_of_other=Follow_User.query.filter_by(followed_person_id=current_user.id).all(), following_of_other=Follow_User.query.filter_by(follower_id=current_user.id).all())
 

@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block styles %}
-    <link rel="stylesheet" href="../static/CSS-files/style_home.css">
-
+    <link rel="stylesheet" href="../static/CSS-files/style_profil.css">
 {% endblock %}
 {% block title %}
     Profile - {{ other_user.firstName }}
@@ -13,11 +12,36 @@
     <img src="../static/Profil_images/{{other_user.img_profile}}" alt="image" width="200" height="200" align="center" style="border-radius: 50%; margin-left: 40%; margin-top: 5%">
     <h5 align="center">{{ other_user.firstName }}</h5>
     <p align="center">{{ other_user.profile_description }}</p>
-    <button type="submit" name="follow" value="{{ other_user.id }}" class="followbutton" >
-        <img src="../static/Icons/follow.png" width="25" height="25" class="d-inline-block align-top" alt="">
-    </button>
-    <br>
+    <div align="center">
+        <p1>{{ follower_of_other|length }}</p1>
+        <p1>Followers</p1>
+        <p1>{{ following_of_other|length }}</p1>
+        <p1>Following</p1>
+        <button  type="submit" name="follow" value="{{ other_user.id }}" class="follow_button" >
+            <img src="../static/Icons/follow.png" width="25" height="25" class="d-inline-block align-top" alt="">
+        </button>
+    </div>
+    <div align="center">
+        <button type="button" class="show_bots_button">
+            <p1>{{ bots|length }}</p1>
+            <p1>Bots, which he own</p1>
+        </button>
+        <br>
+        <div class="bots-container" style="display: none;">
+            <br>
+            {% for bot in bots %}
+                <div class="bot">
+                    <div class="bot-image">
+                        <img src="../static/Profil_images/{{ bot.bot.img_profile }}" width="25" height="25" class="d-inline-block align-top" alt="" style="border-radius: 50%">
+                         {{ bot.bot.firstName }}
+                    </div>
+                </div>
+            {% endfor %}
+            <br>
+        </div>
+    </div>
 </div>
+    <br>
     <div>
     {% for post in other_user.posts %}
         <div class="post-layour">
@@ -92,7 +116,6 @@
                                 <button class="send-comment-button" data-post-id="{{ post.id }}" value="{{ post.id }}" name="send_comment">
                                 <img src="../static/Icons/send.png" width="25" height="25" class="d-inline-block align-top" alt="">
                                 </button>
-
                             </div>
                             <br>
 
@@ -105,7 +128,7 @@
     {% endfor %}
     <br>
     <br>
-        </form>
     </div>
+        </form>
     <script type="text/javascript" src="{{ url_for('static', filename='Profil_script.js') }}"></script>
 {% endblock %}
