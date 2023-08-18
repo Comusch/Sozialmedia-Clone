@@ -15,7 +15,11 @@
       crossorigin="anonymous"
     />
     {% block styles %}{% endblock %}
-    <title>{% block title %}Home{% endblock %}</title>
+    <link rel="shortcut icon" type="image/png" sizes="32x32" href="../static/Icons/logo.png">
+    <title>
+        {% block title %}Home{% endblock %}
+    </title>
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">

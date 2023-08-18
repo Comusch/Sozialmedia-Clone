@@ -19,7 +19,7 @@
         }
 
 .responsive-image {
-    width: 80%; /* Bildbreite auf 100% des Containers setzen */
+    width: 50%; /* Bildbreite auf 100% des Containers setzen */
     height: auto; /* Höhe automatisch anpassen, um das Bildverhältnis beizubehalten */
     object-fit: contain; /* Bild skalieren und beibehalten des Bildverhältnisses */
 }
@@ -60,4 +60,10 @@
     display: flex;
     justify-content: center; /* Horizontally center the items */
     align-items: center; /* Vertically center the items */
+}
+
+.profile_view_layout{
+    background-color: #3900e7;
+    border-radius: 10px;
+    color: #ffffff;
 }

@@ -1,24 +1,16 @@
-{% extends "base.html" %} {% block  title%}Home{% endblock %}
+{% extends "base.html" %}
 {% block styles %}
-    <link rel="stylesheet" href="../static/CSS-files/style_home.css">
+    <link rel="stylesheet" href="../static/CSS-files/style_hashtags.css">
 
 {% endblock %}
-{% block navbar %}
-    <a class="nav-item nav-link" href="/Create_Post">
-        <img src="../static/Icons/Post.png" width="25" height="25" class="d-inline-block align-top" alt="">
-    </a>
-    <div align="right">
-    <a class="nav-item nav-link" href="/addProfile">
-        <img src="../static/Profil_images/{{ user.img_profile }}" width="30" height="30" class="d-inline-block align-top" alt="" style="border-radius: 50%">
-        {{ user.firstName }}
-    </a>
-    </div>
+{% block title %}
+    Hashtags - {{ hashtag.hashtag }}
 {% endblock %}
 {% block content %}
-<h1>Posts</h1>
-    <br>
-    <form method="POST">
-    {% for post in posts %}
+    <h1>Posts under {{ hashtag.hashtag }}</h1>
+    <div>
+     <form method="POST">
+    {% for post in hashtag_posts%}
         <div class="user-post" align="left">
             <a href="/Profil/{{ post.users.id }}" style="color: black; text-underline: none">
                     <img src="../static/Profil_images/{{ post.users.img_profile }}" width="30" height="30" class="d-inline-block align-top" style="border-radius: 50%;">  {{ post.users.firstName }}
@@ -107,7 +99,9 @@
 
             </div>
         <br>
-    {% endfor %}
+       {% endfor %}
+        <br>
        </form>
-    <script type="text/javascript" src="{{ url_for('static', filename='home_script.js') }}"></script>
+    </div>
+     <script type="text/javascript" src="{{ url_for('static', filename='home_script.js') }}"></script>
 {% endblock %}
