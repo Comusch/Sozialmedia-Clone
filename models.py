@@ -35,6 +35,13 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post')
     likes_by_users = db.relationship('User_likes_to_post', back_populates='user')
 
+class Bot_of_User(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    bot_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', foreign_keys=[user_id])
+    bot = db.relationship('User', foreign_keys=[bot_id])
+
 class User_likes_to_post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

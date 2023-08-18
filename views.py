@@ -153,3 +153,4 @@ def hashtag_side(hashtag_id):
                 db.session.commit()
                 flash('Comment is saved!', category="success")
     return render_template("Hashtags.html", user=current_user, hashtag=Hashtags.query.filter_by(id=hashtag_id).first(), hashtags=Hashtags.query.all(), hashtag_posts=Post.query.join(Post_hashtags).filter(Post_hashtags.hashtag_id == hashtag_id).order_by(Post.date.desc()).all())
+
