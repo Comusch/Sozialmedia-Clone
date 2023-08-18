@@ -88,7 +88,7 @@ def addProfile():
             bot_name = request.form.get('bot_name')
             bot_password = request.form.get('bot_password')
             print(bot_password)
-            bot_description_default = f"This is a {current_user.firstName}\'s bot"
+            bot_description_default = f"This is a {current_user.firstName}\'s bot! (bot)"
             new_bot = User(email=f"{current_user.email}_bot", firstName=bot_name, password=generate_password_hash(bot_password, method='sha256'), profile_description=bot_description_default, img_profile="bot_profil.png")
             db.session.add(new_bot)
             db.session.commit()

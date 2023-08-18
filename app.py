@@ -10,8 +10,8 @@ DB_NAME = "database.db"
 
 #DONE: Add a Display to the follower and following list--> Done
 #Done: Add a Display to show which bots are yours and from other uers --> Done
-#TODO: Add to the bot interface a way that the bot gets the posts from the database
-#TODO: Add to the bot interface a way that the bot can Comment on posts and get also the comments from the database
+#Done: Add to the bot interface a way that the bot gets the posts from the database --> Done
+#Done: Add to the bot interface a way that the bot can Comment on posts and get also the comments from the database --> Done
 #TODO: Add the functinality that mods can delete posts and comments
 
 def create_app():

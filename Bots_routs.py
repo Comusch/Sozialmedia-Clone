@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from models import User, Post, Bot_of_User, Hashtags, Post_hashtags, User_likes_to_post
+from models import User, Post, Bot_of_User, Hashtags, Post_hashtags, User_likes_to_post, Comment
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
 import os
 import datetime
+import json
 
 bot_view = Blueprint('bot_view', __name__)
 
@@ -98,10 +99,92 @@ def change_Description_bot(bot_id):
     bot = User.query.filter_by(id=bot_id).first()
     if bot:
         if check_password_hash(bot.password, request.form.get('password')):
-            new_description = request.form.get("new_description")
-            bot.description = new_description
+            new_description = str(request.form.get("description"))+" (bot)"
+            bot.profile_description = new_description
             db.session.commit()
             return "Description changed!"
         else:
             return "Incorrect password, try again."
     return "This bot don\'t exist!"
+
+@bot_view.route("/get_bot_posts/<int:bot_id>", methods=['POST'])
+def get_bot_posts(bot_id):
+    bot = User.query.filter_by(id=bot_id).first()
+    if bot:
+        if check_password_hash(bot.password, request.form.get('password')):
+            posts = Post.query.order_by(Post.date.desc()).all()
+            posts_list = []
+            for post in posts:
+                post_dict = {}
+                post_dict["id"] = post.id
+                post_dict["text"] = post.text
+                post_dict["likes"] = post.likes
+                post_dict["post_image"] = post.post_image
+                posts_list.append(post_dict)
+            posts_list = json.dumps(posts_list)
+            return posts_list
+        else:
+            return "Incorrect password, try again."
+    return "This bot don\'t exist!"
+
+@bot_view.route("/get_bot_post/<int:bot_id>", methods=['POST'])
+def get_bot_post(bot_id):
+    bot = User.query.filter_by(id=bot_id).first()
+    if bot:
+        if check_password_hash(bot.password, request.form.get('password')):
+            post_id = request.form.get("post_id")
+            post = Post.query.filter_by(id=post_id).first()
+            if post:
+                post_dict = {}
+                post_dict["id"] = post.id
+                post_dict["text"] = post.text
+                post_dict["likes"] = post.likes
+                post_dict["post_image"] = post.post_image
+                post_dict = json.dumps(post_dict)
+                return post_dict
+            return "This post don\'t exist!"
+        else:
+            return "Incorrect password, try again."
+    return "This bot don\'t exist!"
+
+@bot_view.route("/get_bot_comments/<int:bot_id>", methods=['POST'])
+def get_bot_comments(bot_id):
+    bot = User.query.filter_by(id=bot_id).first()
+    if bot:
+        if check_password_hash(bot.password, request.form.get('password')):
+            post_id = request.form.get("post_id")
+            post = Post.query.filter_by(id=post_id).first()
+            if post:
+                comments = Comment.query.filter_by(post_id=post.id).all()
+                comments_list = []
+                for comment in comments:
+                    comment_dict = {}
+                    comment_dict["id"] = comment.id
+                    comment_dict["text"] = comment.text
+                    comment_dict["likes"] = comment.likes
+                    comments_list.append(comment_dict)
+                comments_list = json.dumps(comments_list)
+                return comments_list
+            return "This post don\'t exist!"
+        else:
+            return "Incorrect password, try again."
+    return "This bot don\'t exist!"
+
+@bot_view.route("/create_comment_bot/<int:bot_id>", methods=['POST'])
+def create_comment_bot(bot_id):
+    bot = User.query.filter_by(id=bot_id).first()
+    if bot:
+        if check_password_hash(bot.password, request.form.get('password')):
+            post_id = request.form.get("post_id")
+            post = Post.query.filter_by(id=post_id).first()
+            if post:
+                comment_text = request.form.get("comment_text")
+                newComment = Comment(text=comment_text, post_id=post.id)
+                db.session.add(newComment)
+                db.session.commit()
+                return "Comment created!"
+            return "This post don\'t exist!"
+        else:
+            return "Incorrect password, try again."
+    return "This bot don\'t exist!"
+
