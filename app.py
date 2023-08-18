@@ -3,9 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 import os
 from flask_login import LoginManager
+import threading
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
+
 
 def create_app():
     app = Flask(__name__)
@@ -45,5 +47,9 @@ def create_database(app):
 
 app = create_app()
 
+
 if __name__ == '__main__':
-    app.run(host="192.168.2.33")
+    thread = threading.Thread(target=app.run, kwargs={'host': '192.168.2.33', 'use_reloader': False})
+    thread.start()
+
+

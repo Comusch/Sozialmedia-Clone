@@ -29,7 +29,7 @@ class User(db.Model, UserMixin):
     #unique = True means that the email can only be used once
     email = db.Column(db.String(150), unique = True)
     password = db.Column(db.String(150))
-    firstName = db.Column(db.String(150))
+    firstName = db.Column(db.String(150), unique = True)
     profile_description = db.Column(db.String(150), default="I am a user of this website!")
     img_profile = db.Column(db.String(150), default = "default.png")
     posts = db.relationship('Post')

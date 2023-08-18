@@ -38,6 +38,7 @@ def home():
                 db.session.add(new_comment)
                 db.session.commit()
                 flash('Comment is saved!', category="success")
+
     return render_template("home.html", user=current_user, posts= Post.query.order_by(Post.date.desc()).all(), hashtags=Hashtags.query.all())
 
 def get_hashtags(text):
