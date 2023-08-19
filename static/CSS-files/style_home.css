@@ -12,6 +12,9 @@
     color: #ffffff;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
+.space{
+    margin: 10px;
+}
 .image-container {
             width: 100%; /* Containerbreite auf 100% des Elternelements setzen */
             max-width: 500px; /* Maximale Breite des Containers */

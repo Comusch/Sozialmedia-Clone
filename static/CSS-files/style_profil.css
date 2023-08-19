@@ -39,6 +39,9 @@
     outline: none;
     align: center;
 }
+.space{
+    margin: 10px;
+}
 .show_bots_button{
     background-color: transparent;
     border: #5d0067;
@@ -86,6 +89,8 @@
 }
 
 .profile_view_layout{
+    align: center;
+    align-items: flex-end;
     background-color: #3900e7;
     border-radius: 10px;
     color: #ffffff;

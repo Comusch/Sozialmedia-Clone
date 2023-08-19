@@ -9,7 +9,9 @@
 <h1 align="center">Profil</h1>
     <form method="POST">
 <div class = "profile_view_layout" id="Profil-view" >
-    <img src="../static/Profil_images/{{other_user.img_profile}}" alt="image" width="200" height="200" align="center" style="border-radius: 50%; margin-left: 40%; margin-top: 5%">
+    <div class="profile_image_container" align="center" style="align-items: center">
+        <img src="../static/Profil_images/{{ other_user.img_profile }}" alt="image" width="200" height="200" align="center" style="border-radius: 50%; margin-top: 5%">
+    </div>
     <h5 align="center">{{ other_user.firstName }}</h5>
     <p align="center">{{ other_user.profile_description }}</p>
     <div align="center">
@@ -45,7 +47,9 @@
     <div>
     {% for post in other_user.posts %}
         <div class="post-layour">
-            <br>
+            <div class="space">
+
+            </div>
                 {% if post.post_image !="default.png" %}
                 <br>
                     <div align="center" class="image-container">
@@ -72,7 +76,6 @@
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        <br>
                         {{ post.date }}
                     </div>
                    <br>
