@@ -1,13 +1,25 @@
 {% extends "base.html" %}
+{% block styles %}
+    <link rel="stylesheet" href="../static/CSS-files/style_addprofile.css">
+{% endblock %}
 {% block  title%}Change Profil{% endblock %}
 {% block  content%}
-<h1 align="center">Change Profil</h1>
+    <h1 align="center">Your Profil</h1>
     <div id="Changing Profil">
-    <img src="../static/Profil_images/{{user.img_profile}}" alt="image" width="200" height="200" align="center" style="border-radius: 50%; margin-left: 40%; margin-top: 5%">
-    <h5 align="center">{{ user.firstName }}</h5>
+    <div class="your_profile">
+        <div class="profile_image_container" align="center" style="align-items: center">
+            <img src="../static/Profil_images/{{user.img_profile}}" alt="image" width="200" height="200" align="center" style="border-radius: 50%; margin-top: 5%">
+        </div>
+        <h5 align="center">{{ user.firstName }}</h5>
+        <p align="center">{{ user.profile_description }}</p>
+        <div align="center">
+            <p1>{{ follower_of_other|length }}</p1>
+            <p1>Followers</p1>
+            <p1>{{ following_of_other|length }}</p1>
+            <p1>Following</p1>
+        </div>
         <br>
-    <p align="center">{{ user.profile_description }}</p>
-        <br>
+    </div>
     <h4 align="center">Change your profil </h4>
         <br>
 <form method="POST" enctype="multipart/form-data">
@@ -17,6 +29,11 @@
     <div id="imageContainer">
         <img id="loadedImage" src="#" alt="Loaded Image">
     </div>
+    <br>
+    <p1>Add Bot</p1>
+    <input type="text" id ="bot" name="bot_name" class="form-control" placeholder="Enter bot name">
+    <br>
+    <input type="text" id ="bot" name="bot_password" class="form-control" placeholder="Enter bot password">
     <br>
     <div align="center">
         <button type="submit" class="btn btn-primary">Change</button>

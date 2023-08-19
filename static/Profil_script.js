@@ -9,3 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const BotsloaderButton = document.querySelector('.show_bots_button');
+
+        BotsloaderButton.addEventListener('click', () => {
+            const commentSection = document.querySelector(`.bots-container`);
+            commentSection.style.display = commentSection.style.display === 'none' ? 'block' : 'none';
+        });
+});

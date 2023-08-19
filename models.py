@@ -35,6 +35,25 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post')
     likes_by_users = db.relationship('User_likes_to_post', back_populates='user')
 
+class Moderator_Rights(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    grade = db.Column(db.Integer, default = 1)
+    user = db.relationship('User')
+
+class Bot_of_User(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    bot_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', foreign_keys=[user_id])
+    bot = db.relationship('User', foreign_keys=[bot_id])
+
+class Follow_User(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    follower_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    followed_person_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    follower = db.relationship('User', foreign_keys=[follower_id])
+
 class User_likes_to_post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
