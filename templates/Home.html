@@ -27,7 +27,11 @@
             <div class="post-layour">
             <br>
             <div class="space">
-
+            {% if authorization.grade ==1 %}
+                <button type="button" class="close" onClick="deletePost({{ post.id }})">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            {% endif %}
             </div>
                 {% if post.post_image !="default.png" %}
                 <br>
@@ -85,6 +89,11 @@
                                             <a href="/Profil/{{ comment.user_id }}" style="color: black; text-underline: none">
                                             <img src="../static/Profil_images/{{ comment.users.img_profile }}" width="30" height="30" class="d-inline-block align-top" alt="" style="border-radius: 50%;">{{ comment.users.firstName }}
                                             </a>
+                                            {% if authorization.grade ==1 %}
+                                                <button type="button" class="close" onClick="deleteComment({{ comment.id }})">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            {% endif %}
                                         </div>
                                         <div class="comment-text">
                                             {{ comment.text }}

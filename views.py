@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 from app import db
-from models import Post, User_likes_to_post, Comment, User, Hashtags, Post_hashtags, Follow_User, Bot_of_User
+from models import Post, User_likes_to_post, Comment, User, Hashtags, Post_hashtags, Follow_User, Bot_of_User, Moderator_Rights
 import datetime
 from sqlalchemy.sql import func
 import json
@@ -39,7 +39,33 @@ def home():
                 db.session.commit()
                 flash('Comment is saved!', category="success")
 
-    return render_template("home.html", user=current_user, posts= Post.query.order_by(Post.date.desc()).all(), hashtags=Hashtags.query.all())
+    return render_template("home.html", user=current_user, authorization=Moderator_Rights.query.filter_by(user_id=current_user.id).first(),posts= Post.query.order_by(Post.date.desc()).all(), hashtags=Hashtags.query.all())
+
+@views.route('/delete-post', methods=['POST'])
+def delete_post():
+    postj = json.loads(request.data)
+    postId = postj['postId']
+    post = Post.query.get(postId)
+    if post:
+        if Moderator_Rights.query.filter_by(user_id=current_user.id).first():
+            db.session.delete(post)
+            db.session.commit()
+            flash("The post was deleted!", category="success")
+
+    return jsonify({})
+
+@views.route('/delete-comment', methods=['POST'])
+def delete_comment():
+    commentj = json.loads(request.data)
+    commentId = commentj['commentId']
+    comment = Comment.query.get(commentId)
+    if comment:
+        if Moderator_Rights.query.filter_by(user_id=current_user.id).first():
+            db.session.delete(comment)
+            db.session.commit()
+            flash("The post was deleted!", category="success")
+
+    return jsonify({})
 
 def get_hashtags(text):
     hashtags = []
