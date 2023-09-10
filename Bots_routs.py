@@ -51,7 +51,7 @@ def Create_Post_bot(bot_id):
                 if image.filename != "":
                     print(str(datetime.datetime.now()) + " " + image.filename)
                     date = str(datetime.datetime.now()).replace(" ", "_").replace(":", "_").replace(".", "_")
-                    image_filename = f"{current_user.id}_{date}.png"
+                    image_filename = f"{bot_id}_{date}.png"
                     image_path = os.path.join("static", "Post_images", image_filename)
                     image.save(image_path)
                     new_Post.post_image = image_filename
@@ -71,9 +71,8 @@ def Create_Post_bot(bot_id):
                         newPost_hashtag = Post_hashtags(post_id=new_Post.id, hashtag_id=newHashtag.id)
                         db.session.add(newPost_hashtag)
                 db.session.commit()
-            answer = "post_id: " + str(new_Post.id)
-            ans = json.dumps(answer)
-            return ans
+            ans = {"post_id": new_Post.id}
+            return json.dumps(ans)
         else:
             return "Incorrect password, try again."
     return "This bot don\'t exist!"
@@ -181,7 +180,7 @@ def create_comment_bot(bot_id):
             post = Post.query.filter_by(id=post_id).first()
             if post:
                 comment_text = request.form.get("comment_text")
-                newComment = Comment(text=comment_text, post_id=post.id)
+                newComment = Comment(text=comment_text, post_id=post.id, user_id=bot.id)
                 db.session.add(newComment)
                 db.session.commit()
                 return "Comment created!"

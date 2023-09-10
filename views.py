@@ -4,6 +4,7 @@ from app import db
 from models import Post, User_likes_to_post, Comment, User, Hashtags, Post_hashtags, Follow_User, Bot_of_User, Moderator_Rights
 import datetime
 from sqlalchemy.sql import func
+import Postlike_predictions as post_pred
 import json
 import os
 
@@ -38,8 +39,19 @@ def home():
                 db.session.add(new_comment)
                 db.session.commit()
                 flash('Comment is saved!', category="success")
-
-    return render_template("home.html", user=current_user, authorization=Moderator_Rights.query.filter_by(user_id=current_user.id).first(),posts= Post.query.order_by(Post.date.desc()).all(), hashtags=Hashtags.query.all())
+    #Sort posts by the possibility of like and interest of user
+    #test of tensor for post
+    #get the 4 newest posts
+    posts = Post.query.order_by(Post.date.desc()).all()
+    #print(post_pred.Calculate_posts_Tensor(posts))
+    #print(post_pred.Calculate_user_Tensor(current_user))
+    posts_array = post_pred.Create_post_Tensor_Array(posts, current_user)
+    posts_array = post_pred.Sort_post_Tensor_Array(posts_array)
+    posts_sorted = []
+    for post in posts_array:
+        posts_sorted.append(post[0])
+    #posts = post_pred.predict_posts(posts, current_user.id)
+    return render_template("home.html", user=current_user, authorization=Moderator_Rights.query.filter_by(user_id=current_user.id).first(),posts= posts_sorted, hashtags=Hashtags.query.all())
 
 @views.route('/delete-post', methods=['POST'])
 def delete_post():

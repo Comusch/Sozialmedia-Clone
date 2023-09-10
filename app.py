@@ -14,7 +14,8 @@ DB_NAME = "database.db"
 #Done: Add to the bot interface a way that the bot gets the posts from the database --> Done
 #Done: Add to the bot interface a way that the bot can Comment on posts and get also the comments from the database --> Done
 #Done: Add the functinality that mods(admin account) can delete posts and comments --> Done
-
+#TODO: Add a algorithm that the posts are sorted by the most likes and current date
+#TODO: Add a algorithm that the posts are more personalized for the user on the main page "Home"
 
 def create_app():
     app = Flask(__name__)

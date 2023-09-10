@@ -10,6 +10,10 @@ Furthermore the project will create a admin account with the email "admin@admin.
 With this account you can delete posts and comments.\
 The real user-accounts can easily be created in the website.
 
+## Special Features
+The posts will be sorted after you liked them.\
+So the homepage will show you the posts that you will probably like the most.\
+
 ## Bot Support
 You can create a new bot in your Profile. The bot can post and like posts.
 The bot has an id, which you also see in your profile.
