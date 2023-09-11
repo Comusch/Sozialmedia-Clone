@@ -97,7 +97,10 @@ def Create_post_Tensor_Array(posts, user):
             post_tensor_array.append([posts[i], Calculate_distance(user_tensor, posts_tensor[i])])
         return post_tensor_array
     else:
-        return None
+        post_tensor_array = []
+        for i in range(len(posts_tensor)):
+            post_tensor_array.append([posts[i], 0])
+        return post_tensor_array
 
 #sort the post_tensor_array by the distance with the bubble sort algorithm
 def Sort_post_Tensor_Array(post_tensor_array):
