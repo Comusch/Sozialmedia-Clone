@@ -1,0 +1,41 @@
+
+.cost-color-front > a{
+    color: #5d0067;
+}
+
+.cost-color-front > div{
+    color: #5d0067;
+}
+
+.cost-color-front{
+    color: #5d0067;
+}
+
+.cost-back-color{
+    background-color: #5d0067;
+    color: black;
+}
+
+.button-div-before{
+    align: center;
+}
+
+.fixed-button{
+    position: fixed;
+    align: right;
+    bottom: 20px;
+    background-color: #5d0067;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    right: 20px;
+}
+
+.navbar{
+    position: fixed !important;
+    background-color: #ffffff;
+    width: 100%;
+}
+

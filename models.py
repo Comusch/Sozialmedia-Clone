@@ -76,3 +76,16 @@ class Hashtags(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hashtag = db.Column(db.String(150), unique=True)
 
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(150))
+    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    sender = db.relationship('User', foreign_keys=[sender_id])
+    receiver = db.relationship('User', foreign_keys=[receiver_id])
+
+    read = db.Column(db.Boolean, default=False)
+    img = db.Column(db.String(150), default = "default.png")
+

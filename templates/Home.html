@@ -3,17 +3,7 @@
     <link rel="stylesheet" href="../static/CSS-files/style_home.css">
 
 {% endblock %}
-{% block navbar %}
-    <a class="nav-item nav-link" href="/Create_Post">
-        <img src="../static/Icons/Post.png" width="25" height="25" class="d-inline-block align-top" alt="">
-    </a>
-    <div align="right">
-    <a class="nav-item nav-link" href="/addProfile">
-        <img src="../static/Profil_images/{{ user.img_profile }}" width="30" height="30" class="d-inline-block align-top" alt="" style="border-radius: 50%">
-        {{ user.firstName }}
-    </a>
-    </div>
-{% endblock %}
+
 {% block content %}
 <h1>Posts for you</h1>
     <br>
@@ -24,7 +14,7 @@
                     <img src="../static/Profil_images/{{ post.users.img_profile }}" width="30" height="30" class="d-inline-block align-top" style="border-radius: 50%;">  {{ post.users.firstName }}
                 </a>
         </div>
-            <div class="post-layour">
+        <div class="post-layour">
             <br>
             <div class="space">
             {% if authorization.grade ==1 %}

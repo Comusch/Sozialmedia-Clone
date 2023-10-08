@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 from app import db
-from models import Post, User_likes_to_post, Comment, User, Hashtags, Post_hashtags, Follow_User, Bot_of_User, Moderator_Rights
+from models import Post, User_likes_to_post, Comment, User, Hashtags, Post_hashtags, Follow_User, Bot_of_User, Moderator_Rights, Message
 import datetime
 from sqlalchemy.sql import func
 import Postlike_predictions as post_pred
@@ -199,4 +199,10 @@ def hashtag_side(hashtag_id):
                 db.session.commit()
                 flash('Comment is saved!', category="success")
     return render_template("Hashtags.html", user=current_user, hashtag=Hashtags.query.filter_by(id=hashtag_id).first(), hashtags=Hashtags.query.all(), hashtag_posts=Post.query.join(Post_hashtags).filter(Post_hashtags.hashtag_id == hashtag_id).order_by(Post.date.desc()).all())
+
+@views.route('/Direct-Messages', methods=['GET', 'POST'])
+@login_required
+def direct_messages():
+    print("Hi")
+    return render_template("DirectMessage.html", user=current_user, messages=Message.query.all())
 

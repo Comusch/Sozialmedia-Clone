@@ -17,6 +17,11 @@ DB_NAME = "database.db"
 #Done: Add a algorithm that the posts are sorted by the most likes and current date --> Done
 #Done: Add a algorithm that the posts are more personalized for the user on the main page "Home" --> Done
 
+#TODO: Change the loading of the home page load 4 posts and then load more when the user scrolls down
+#TODO: Improve the algorithm for the personalized posts, that the likes and the comments are also included
+#TODO: Update the design of the website, that it looks on a computer different than on a phone
+#TODO: Add a direct message function
+
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = "Winnetou"
