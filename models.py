@@ -89,3 +89,23 @@ class Message(db.Model):
     read = db.Column(db.Boolean, default=False)
     img = db.Column(db.String(150), default = "default.png")
 
+class Conversation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(150))
+
+    user_to_com = db.relationship('User_to_Com')
+    com_to_message = db.relationship('Com_to_Message')
+
+class User_to_Com(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    com_id = db.Column(db.Integer, db.ForeignKey('conversation.id'))
+
+class Com_to_Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    com_id = db.Column(db.Integer, db.ForeignKey('conversation.id'))
+    message_id = db.Column(db.Integer, db.ForeignKey('message.id'))
+
+    messages = db.relationship('Message')
+
+

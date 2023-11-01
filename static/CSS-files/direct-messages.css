@@ -1,0 +1,65 @@
+.content{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 80%;
+    margin: 0px;
+    padding: 10px;
+    border-radius: 10px;
+}
+.Contacts{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    height: 80vh;
+    margin: 10px;
+    padding: 10px;
+    padding-bottom: 5px;
+    border-radius: 10px;
+    background-color: #5d0067;
+    color: white;
+}
+
+.Dialog-field{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+    height: 80vh;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #83008d;
+    color: white;
+}
+
+.btn_conversation{
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+}
+
+.nickname_text{
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px;
+    width: 80%;
+    max-height: 30px;
+    display: none;
+}
+.btn_enter{
+    background-color: transparent;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+    margin: 10px;
+    width: 80%;
+    border: white;
+    border-radius: 5px;
+    outline-color: white;
+    -moz-outline-radius: 5px;
+    display: none;
+}

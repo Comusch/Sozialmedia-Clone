@@ -1,10 +1,36 @@
 {%extends "base.html"%}
 {% block  title%}Direct Messages{% endblock %}
 {% block styles %}
-    <link rel="stylesheet" href="../static/CSS-files/style_direct-messages.css">
+    <link rel="stylesheet" href="../static/CSS-files/direct-messages.css">
 {% endblock %}
 
 {% block content %}
-    <h2>Direct Messages</h2>
+    <form method="POST">
+        <h2>Direct Messages</h2>
+        <div class="content">
+            <div class="Contacts">
+                <a href="/DirectMessage/{{ current_user }}/1">
+                    <img src="../static/Profil_images/default.png" width="30" height="30" class="d-inline-block align-top" style="border-radius: 50%;">
+                    user1</a>
+                <a href="/DirectMessage/{{ current_user }}/1">
+                    <img src="../static/Profil_images/default.png" width="30" height="30" class="d-inline-block align-top" style="border-radius: 50%;">
+                    user1</a>
+                <button class="btn_conversation" id="btn_conversation">
+                        <img src="../static/Icons/add.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                </button>
+                <textarea name="nickname_text" id="nickname_text" class="nickname_text" placeholder="Nickname"></textarea>
+                <button type="submit" class="btn_enter" id="btn_enter">Enter</button>
+            </div>
+        <div class="Dialog-field">
+            <div class="Dialog">
+                <p>message</p>
+                <p>message</p>
+                <p>message</p>
+                <p>message</p>
+                <p>message</p>
+            </div>
+        </div>
+    </div>
+    </form>
 
 {% endblock %}
